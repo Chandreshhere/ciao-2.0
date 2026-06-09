@@ -12,7 +12,9 @@
 .hero__sticky {
   position: sticky;
   top: 0;
-  height: 100vh;
+  /* svh = small viewport height: stays constant as the mobile address bar
+     shows/hides, so the layout doesn't shift while dragging to scroll. */
+  height: 100svh;
   overflow: hidden;
   background: linear-gradient(180deg, #fdf6f0 0%, #f7e9e1 52%, #ecd8cf 100%);
 }
@@ -132,7 +134,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100vh;
+  height: 100svh;
 }
 .hero__slide {
   position: absolute;
@@ -262,7 +264,7 @@
   /* Shorter image / taller text band so the title clears the fixed nav with
      comfortable spacing (was colliding with the header). */
   .hero {
-    --hero-split: 52vh;
+    --hero-split: 52svh;
   }
   .hero__band {
     padding-top: clamp(5.5rem, 15vh, 7rem);
