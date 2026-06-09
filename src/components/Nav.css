@@ -206,4 +206,14 @@
   .nav__burger {
     display: flex;
   }
+  /* The header slides (transform) AND, when scrolled, has a backdrop blur.
+     On mobile GPUs that combo can make the header's own children (logo +
+     burger) vanish, leaving only the blurred bar. Use a solid translucent
+     background instead of backdrop-filter on mobile so they always render. */
+  .nav--scrolled {
+    background: rgba(253, 246, 240, 0.95);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 1px 0 var(--border), 0 10px 30px -20px rgba(42, 26, 14, 0.4);
+  }
 }
