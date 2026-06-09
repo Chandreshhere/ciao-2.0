@@ -37,9 +37,9 @@ function Icon({ name }) {
 export default function Hero({ ready }) {
   const reduced = useReducedMotion()
   const mobile = useIsMobile()
-  // Keep the scroll-pin on mobile (same effect as desktop) but give it less
-  // scroll travel so it doesn't read as a tall empty gap.
-  const pinHeight = mobile ? '150vh' : '200vh'
+  // On mobile the scroll-pin slides the title up behind the fixed nav and crops
+  // the image — so render a plain static hero (text + image) there instead.
+  const flat = reduced || mobile
   const slides = hero.slides
   const [index, setIndex] = useState(0)
   const [base, setBase] = useState(0) // image settled underneath the wipe
@@ -108,7 +108,7 @@ export default function Hero({ ready }) {
       id="top"
       aria-labelledby="hero-title"
       ref={sectionRef}
-      style={reduced ? undefined : { height: pinHeight }}
+      style={flat ? undefined : { height: '200vh' }}
     >
       <div className="hero__sticky">
       {/* — Top band: gradient stays fixed; only the text inside moves up — */}
@@ -116,7 +116,7 @@ export default function Hero({ ready }) {
         <div className="glow hero__glow" aria-hidden="true" />
         <motion.div
           className="hero__band-inner shell"
-          style={reduced ? undefined : { y: bandY }}
+          style={flat ? undefined : { y: bandY }}
         >
           <div className="hero__headline">
             <h1 className="display hero__title" id="hero-title">
@@ -159,11 +159,11 @@ export default function Hero({ ready }) {
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, ease: EASE, delay: 0 }}
-        style={reduced ? undefined : { height: stageHeight }}
+        style={flat ? undefined : { height: stageHeight }}
       >
         <motion.div
           className="hero__slides"
-          style={reduced ? undefined : { scale: imgScale, y: imgY }}
+          style={flat ? undefined : { scale: imgScale, y: imgY }}
         >
           {/* Base layer: the settled image, always covering the stage. */}
           <div className="hero__slide">
