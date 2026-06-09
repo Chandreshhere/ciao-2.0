@@ -140,10 +140,11 @@
     aspect-ratio: 4 / 3;
     order: -1;
   }
-  /* Tighten the pinned panel so content fills the screen — the old large
-     padding left big empty bands top and bottom on mobile. */
+  /* Push the image + text down to the lower part of the panel so there's no
+     big empty band at the bottom on mobile. */
   .vpanel__inner {
-    padding-block: clamp(2.5rem, 7vh, 4.5rem);
+    justify-content: flex-end;
+    padding-block: clamp(5rem, 13vh, 8rem) clamp(1rem, 2.5vh, 1.75rem);
     gap: clamp(1rem, 3vw, 1.6rem);
   }
 }
