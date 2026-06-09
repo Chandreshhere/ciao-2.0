@@ -11,12 +11,19 @@ import TrustBar from './components/TrustBar'
 import Vitrine from './components/Vitrine'
 import Menu from './components/Menu'
 import MenuPage from './components/MenuPage'
+import AboutPage from './components/AboutPage'
 import Chef from './components/Chef'
 import Order from './components/Order'
 import Footer from './components/Footer'
 
-const isMenuRoute = () =>
-  typeof window !== 'undefined' && window.location.hash === '#menu-full'
+// Tiny hash router: #/menu · #/about · else home.
+const getRoute = () => {
+  if (typeof window === 'undefined') return 'home'
+  const h = window.location.hash
+  if (h === '#/menu' || h === '#menu-full') return 'menu'
+  if (h === '#/about') return 'about'
+  return 'home'
+}
 
 function Progress() {
   const { scrollYProgress } = useScroll()
@@ -36,33 +43,44 @@ const skipLoader =
 export default function App() {
   useLenis()
   const [ready, setReady] = useState(skipLoader)
-  const [menuPage, setMenuPage] = useState(isMenuRoute())
+  const [route, setRoute] = useState(getRoute())
 
   useEffect(() => {
-    const onHash = () => setMenuPage(isMenuRoute())
+    const onHash = () => setRoute(getRoute())
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
-  // Dedicated full-menu page (#menu-full).
-  if (menuPage) return <MenuPage />
+  // Jump to the top whenever the route (page) changes — but not on in-page
+  // anchor clicks, which keep the same route.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [route])
+
+  const isHome = route === 'home'
 
   return (
     <>
-      {!skipLoader && <Loader onDone={() => setReady(true)} />}
+      {!skipLoader && isHome && <Loader onDone={() => setReady(true)} />}
       <Cursor />
       <Progress />
-      <Nav ready={ready} />
-      <main>
-        <Hero ready={ready} />
-        <Statement />
-        <Ticker />
-        <TrustBar />
-        <Vitrine />
-        <Menu />
-        <Chef />
-        <Order />
-      </main>
+      <Nav ready={isHome ? ready : true} />
+
+      {isHome && (
+        <main>
+          <Hero ready={ready} />
+          <Statement />
+          <Ticker />
+          <TrustBar />
+          <Vitrine />
+          <Menu />
+          <Chef />
+          <Order />
+        </main>
+      )}
+      {route === 'menu' && <MenuPage />}
+      {route === 'about' && <AboutPage />}
+
       <Footer />
     </>
   )

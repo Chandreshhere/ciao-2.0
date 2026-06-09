@@ -11,19 +11,19 @@ const COLUMNS = [
   {
     title: 'Explore',
     links: [
-      { label: 'The Vitrine', href: '#vitrine' },
-      { label: 'Our Menu', href: '#menu' },
-      { label: 'The Chef', href: '#chef' },
+      { label: 'Menu', href: '#/menu' },
+      { label: 'About', href: '#/about' },
+      { label: 'The Chef', href: '#/about' },
       { label: 'Order', href: '#order' },
     ],
   },
   {
     title: 'Menu',
     links: [
-      { label: 'Cakes', href: '#menu' },
-      { label: 'Patisserie', href: '#menu' },
-      { label: 'Puddings & Shots', href: '#menu' },
-      { label: 'Gifting', href: '#menu' },
+      { label: 'Cakes', href: '#/menu' },
+      { label: 'Patisserie', href: '#/menu' },
+      { label: 'Puddings & Shots', href: '#/menu' },
+      { label: 'Gifting', href: '#/menu' },
     ],
   },
   {

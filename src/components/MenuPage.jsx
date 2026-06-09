@@ -8,25 +8,7 @@ export default function MenuPage() {
   }, [])
 
   return (
-    <main className="menupage">
-      <header className="menupage__top">
-        <div className="shell menupage__top-inner">
-          <button
-            type="button"
-            className="menupage__back"
-            onClick={() => {
-              window.location.hash = ''
-            }}
-          >
-            ← Back
-          </button>
-          <a className="menupage__brand" href="#" onClick={() => (window.location.hash = '')}>
-            <span className="menupage__brand-ciao">CIAO</span>
-            <span className="menupage__brand-pat">patisserie</span>
-          </a>
-        </div>
-      </header>
-
+    <main className="page menupage">
       <div className="shell menupage__head">
         <p className="menupage__kicker">Le Menu</p>
         <h1 className="menupage__title display">

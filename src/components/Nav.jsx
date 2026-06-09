@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from 'motion/react'
 import { nav } from '../data/content'
 import './Nav.css'
 
+const RIGHT_LINKS = [{ label: 'Contact', href: '#contact' }]
+
 export default function Nav({ ready }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -42,12 +44,23 @@ export default function Nav({ ready }) {
     >
       <span className="nav__scallop" aria-hidden="true" />
       <div className="nav__inner shell">
+        {/* Left — primary navigation */}
+        <nav className="nav__group nav__group--left" aria-label="Primary">
+          {nav.links.map((l) => (
+            <a key={l.href} href={l.href} className="nav__link">
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Centre — logo */}
         <a className="nav__logo" href="#top" aria-label="Ciao Patisserie — home">
           <img src="/ciao-logo-trim.png" alt="Ciao Patisserie" className="nav__logo-img" />
         </a>
 
-        <nav className="nav__links" aria-label="Primary">
-          {nav.links.map((l) => (
+        {/* Right — secondary link + CTA */}
+        <div className="nav__group nav__group--right">
+          {RIGHT_LINKS.map((l) => (
             <a key={l.href} href={l.href} className="nav__link">
               {l.label}
             </a>
@@ -55,7 +68,7 @@ export default function Nav({ ready }) {
           <a href={nav.cta.href} className="nav__cta">
             {nav.cta.label}
           </a>
-        </nav>
+        </div>
 
         <button
           className={`nav__burger${open ? ' is-open' : ''}`}
@@ -86,7 +99,7 @@ export default function Nav({ ready }) {
                 show: { transition: { staggerChildren: 0.07, delayChildren: 0.08 } },
               }}
             >
-              {[...nav.links, nav.cta].map((l) => (
+              {[...nav.links, ...RIGHT_LINKS, nav.cta].map((l) => (
                 <motion.a
                   key={l.href}
                   href={l.href}

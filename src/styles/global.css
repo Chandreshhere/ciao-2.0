@@ -112,6 +112,24 @@ button {
   padding-block: var(--section-y);
 }
 
+/* — Sub-page scaffold (Gallery / Menu / About) — */
+.page {
+  padding-top: clamp(150px, 19vh, 224px);
+  padding-bottom: var(--section-y);
+  min-height: 70vh;
+}
+.page__head {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: var(--s-3);
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+.page__head .lede {
+  text-align: center;
+  margin-inline: auto;
+}
+
 /* — Scroll progress bar — */
 .progress {
   position: fixed;

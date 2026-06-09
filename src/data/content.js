@@ -9,9 +9,8 @@ export const brand = {
 
 export const nav = {
   links: [
-    { label: 'Gallery', href: '#vitrine' },
-    { label: 'Menu', href: '#menu' },
-    { label: 'About', href: '#chef' },
+    { label: 'Menu', href: '#/menu' },
+    { label: 'About', href: '#/about' },
   ],
   cta: { label: 'Order Now', href: '#order' },
 }
