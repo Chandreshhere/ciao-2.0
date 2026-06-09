@@ -171,7 +171,10 @@
     gap: clamp(1.6rem, 5vw, 2.5rem);
   }
   .chs__portrait {
-    position: static;
+    /* relative (not static) so the absolutely-positioned badge stays anchored
+       to the portrait — static lets it escape to .chs__grid and overlap the
+       text at the bottom of the section. */
+    position: relative;
     max-width: 420px;
   }
 }

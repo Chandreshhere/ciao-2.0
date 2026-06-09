@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { hero } from '../data/content'
+import { useIsMobile } from '../lib/useMediaQuery'
 import './Hero.css'
 
 const EASE = [0.22, 1, 0.36, 1]
@@ -35,6 +36,10 @@ function Icon({ name }) {
 
 export default function Hero({ ready }) {
   const reduced = useReducedMotion()
+  const mobile = useIsMobile()
+  // Keep the scroll-pin on mobile (same effect as desktop) but give it less
+  // scroll travel so it doesn't read as a tall empty gap.
+  const pinHeight = mobile ? '150vh' : '200vh'
   const slides = hero.slides
   const [index, setIndex] = useState(0)
   const [base, setBase] = useState(0) // image settled underneath the wipe
@@ -101,7 +106,7 @@ export default function Hero({ ready }) {
       id="top"
       aria-labelledby="hero-title"
       ref={sectionRef}
-      style={reduced ? undefined : { height: '200vh' }}
+      style={reduced ? undefined : { height: pinHeight }}
     >
       <div className="hero__sticky">
       {/* — Top band: gradient stays fixed; only the text inside moves up — */}

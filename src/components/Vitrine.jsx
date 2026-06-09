@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { vitrine } from '../data/content'
+import { useIsMobile } from '../lib/useMediaQuery'
 import SectionIntro from './ui/SectionIntro'
 import './Vitrine.css'
 
@@ -68,6 +69,10 @@ function VitrinePanel({ item, i, count, progress, reduced }) {
 
 export default function Vitrine() {
   const reduced = useReducedMotion()
+  const mobile = useIsMobile()
+  // Keep the pinned cascade on mobile (like desktop) but with less scroll
+  // travel per panel so the section isn't a tall empty scroll.
+  const perPanel = mobile ? 55 : 75
   const seqRef = useRef(null)
   const { scrollYProgress: progress } = useScroll({
     target: seqRef,
@@ -81,7 +86,7 @@ export default function Vitrine() {
       id="vitrine"
       aria-labelledby="vitrine-title"
       ref={seqRef}
-      style={reduced ? undefined : { height: `${N * 75}vh` }}
+      style={reduced ? undefined : { height: `${N * perPanel}vh` }}
     >
       <div className="glow vitrine__glow" aria-hidden="true" />
 
