@@ -147,6 +147,12 @@
     padding-block: clamp(5rem, 13vh, 8rem) clamp(1rem, 2.5vh, 1.75rem);
     gap: clamp(1rem, 3vw, 1.6rem);
   }
+  /* …but the first panel carries the "From Our Vitrine" heading — keep it near
+     the top so there's no empty gap between the stats and the gallery. */
+  .vitrine__pin .vpanel:first-child .vpanel__inner {
+    justify-content: flex-start;
+    padding-block: clamp(2rem, 6vh, 3.5rem) clamp(1rem, 2.5vh, 1.75rem);
+  }
 }
 
 /* Phones: the gallery renders as a plain stacked list (is-static). Collapse the
