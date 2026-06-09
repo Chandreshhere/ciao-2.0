@@ -12,16 +12,18 @@ import Vitrine from './components/Vitrine'
 import Menu from './components/Menu'
 import MenuPage from './components/MenuPage'
 import AboutPage from './components/AboutPage'
+import ContactPage from './components/ContactPage'
 import Chef from './components/Chef'
 import Order from './components/Order'
 import Footer from './components/Footer'
 
-// Tiny hash router: #/menu · #/about · else home.
+// Tiny hash router: #/menu · #/about · #/contact · else home.
 const getRoute = () => {
   if (typeof window === 'undefined') return 'home'
   const h = window.location.hash
   if (h === '#/menu' || h === '#menu-full') return 'menu'
   if (h === '#/about') return 'about'
+  if (h === '#/contact') return 'contact'
   return 'home'
 }
 
@@ -80,6 +82,7 @@ export default function App() {
       )}
       {route === 'menu' && <MenuPage />}
       {route === 'about' && <AboutPage />}
+      {route === 'contact' && <ContactPage />}
 
       <Footer />
     </>

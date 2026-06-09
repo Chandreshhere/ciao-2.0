@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { nav } from '../data/content'
 import './Nav.css'
 
-const RIGHT_LINKS = [{ label: 'Contact', href: '#contact' }]
+const RIGHT_LINKS = [{ label: 'Contact', href: '#/contact' }]
 
 export default function Nav({ ready }) {
   const [scrolled, setScrolled] = useState(false)

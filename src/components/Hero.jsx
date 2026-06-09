@@ -88,7 +88,7 @@ export default function Hero({ ready }) {
     hidden: { y: '108%' },
     show: (i) => ({
       y: '0%',
-      transition: { duration: 0.95, ease: EASE, delay: 0.35 + i * 0.13 },
+      transition: { duration: 0.7, ease: EASE, delay: 0.05 + i * 0.08 },
     }),
   }
 
@@ -136,7 +136,7 @@ export default function Hero({ ready }) {
             className="hero__aside"
             initial={{ opacity: 0, y: 16 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, ease: EASE, delay: 0.85 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.25 }}
           >
             <p className="hero__sub">{hero.sub}</p>
           </motion.div>
@@ -148,7 +148,7 @@ export default function Hero({ ready }) {
         className="hero__stage"
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
-        transition={{ duration: 1, ease: EASE, delay: 0.5 }}
+        transition={{ duration: 0.6, ease: EASE, delay: 0 }}
         style={reduced ? undefined : { height: stageHeight }}
       >
         <div className="hero__slides">
