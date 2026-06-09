@@ -113,7 +113,10 @@ export default function Footer() {
         </div>
 
         {COLUMNS.map((col) => (
-          <div className="footer__col" key={col.title}>
+          <div
+            className={`footer__col footer__col--${col.title.toLowerCase().replace(/\s+/g, '-')}`}
+            key={col.title}
+          >
             <h3 className="footer__col-title">{col.title}</h3>
             {col.links.map((l) => (
               <a className="footer__link" href={l.href} key={l.label}>

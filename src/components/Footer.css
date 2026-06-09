@@ -207,8 +207,41 @@
 }
 
 @media (max-width: 560px) {
+  /* Cleaner, centred footer with less clutter on phones:
+     brand on top, the redundant "Menu" column dropped, and the contact
+     column spanning full width below the link columns. */
   .footer__grid {
     grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 1.8rem 1.2rem;
+  }
+  .footer__brand {
+    justify-items: center;
+    text-align: center;
+  }
+  .footer__tagline {
+    margin-inline: auto;
+  }
+  .footer__social {
+    justify-content: center;
+  }
+  .footer__col {
+    justify-items: center;
+  }
+  .footer__link {
+    width: auto;
+  }
+  /* Drop the redundant Menu column (its links duplicate Explore → Menu). */
+  .footer__col--menu {
+    display: none;
+  }
+  /* Contact column spans the full width and centres its button. */
+  .footer__grid > .footer__col:last-child {
+    grid-column: 1 / -1;
+  }
+  .footer__cta-btn {
+    justify-self: center;
   }
   .footer__bottom {
     justify-content: center;
