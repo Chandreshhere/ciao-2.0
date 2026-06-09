@@ -259,10 +259,12 @@
    the text/image sit higher (no empty band under the nav). Matches the 60vh
    stage start set in Hero.jsx. */
 @media (max-width: 860px) {
+  /* Shorter image / taller text band so the title clears the fixed nav with
+     comfortable spacing (was colliding with the header). */
   .hero {
-    --hero-split: 60vh;
+    --hero-split: 52vh;
   }
   .hero__band {
-    padding-top: clamp(4.5rem, 13vh, 6rem);
+    padding-top: clamp(5.5rem, 15vh, 7rem);
   }
 }

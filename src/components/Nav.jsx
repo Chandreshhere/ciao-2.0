@@ -15,10 +15,11 @@ export default function Nav({ ready }) {
     const onScroll = () => {
       const y = window.scrollY
       setScrolled(y > 80)
-      // Hide the header as soon as the user starts scrolling down (first thing);
-      // only show it again once they're back at the very top.
-      if (y > 8 && y > last) setHidden(true)
-      else if (y <= 8) setHidden(false)
+      // Smart header: hide when scrolling down, reveal when scrolling up
+      // (and always show at the very top). The small threshold avoids jitter.
+      if (y <= 8) setHidden(false)
+      else if (y > last + 4) setHidden(true)
+      else if (y < last - 4) setHidden(false)
       last = y
     }
     onScroll()
