@@ -4,11 +4,12 @@ import { brand, order } from '../data/content'
 import GoldHeading from './ui/GoldHeading'
 import './Order.css'
 
+// Each image: its scattered (non-corner) resting spot and its own size.
 const IMAGES = [
-  { src: '/gallery/product-02.png', cls: 'order__img--tl' },
-  { src: '/gallery/product-11.png', cls: 'order__img--tr' },
-  { src: '/gallery/product-07.png', cls: 'order__img--bl' },
-  { src: '/gallery/product-10.png', cls: 'order__img--br' },
+  { src: '/gallery/product-02.png', w: 'clamp(154px, 17.5vw, 268px)', x: '-33vw', y: '-21vh' },
+  { src: '/gallery/product-11.png', w: 'clamp(116px, 12.5vw, 196px)', x: '31vw', y: '-27vh' },
+  { src: '/gallery/product-07.png', w: 'clamp(134px, 15vw, 228px)', x: '-37vw', y: '20vh' },
+  { src: '/gallery/product-10.png', w: 'clamp(146px, 16.5vw, 250px)', x: '35vw', y: '15vh' },
 ]
 
 const FACTS = [
@@ -31,27 +32,27 @@ export default function Order() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'center center'],
+    offset: ['start end', 'start center'],
   })
 
   const waHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     order.whatsappText,
   )}`
 
-  // 0 = images stacked over the centre · 1 = settled into the corners.
-  const tlX = useTransform(scrollYProgress, [0, 1], ['44vw', '0vw'])
-  const tlY = useTransform(scrollYProgress, [0, 1], ['34vh', '0vh'])
-  const trX = useTransform(scrollYProgress, [0, 1], ['-44vw', '0vw'])
-  const trY = useTransform(scrollYProgress, [0, 1], ['34vh', '0vh'])
-  const blX = useTransform(scrollYProgress, [0, 1], ['44vw', '0vw'])
-  const blY = useTransform(scrollYProgress, [0, 1], ['-34vh', '0vh'])
-  const brX = useTransform(scrollYProgress, [0, 1], ['-44vw', '0vw'])
-  const brY = useTransform(scrollYProgress, [0, 1], ['-34vh', '0vh'])
+  // 0 = images stacked on top of each other at the centre · 1 = scattered.
+  const x1 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[0].x])
+  const y1 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[0].y])
+  const x2 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[1].x])
+  const y2 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[1].y])
+  const x3 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[2].x])
+  const y3 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[2].y])
+  const x4 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[3].x])
+  const y4 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[3].y])
   const spread = [
-    { x: tlX, y: tlY },
-    { x: trX, y: trY },
-    { x: blX, y: blY },
-    { x: brX, y: brY },
+    { x: x1, y: y1 },
+    { x: x2, y: y2 },
+    { x: x3, y: y3 },
+    { x: x4, y: y4 },
   ]
 
   return (
@@ -61,16 +62,21 @@ export default function Order() {
       aria-label="Ready to order"
       ref={ref}
     >
-      {/* Corner images that spread from the centre as the section scrolls in */}
+      {/* Images stacked at the centre, scattering out as the section scrolls in */}
       <div className="order__images" aria-hidden="true">
         {IMAGES.map((img, i) => (
-          <motion.div
-            key={img.src}
-            className={`order__img ${img.cls}`}
-            style={reduced ? undefined : spread[i]}
-          >
-            <img src={img.src} alt="" loading="lazy" decoding="async" />
-          </motion.div>
+          <div className="order__img-cell" key={img.src}>
+            <motion.div
+              className="order__img"
+              style={
+                reduced
+                  ? { x: img.x, y: img.y, width: img.w }
+                  : { ...spread[i], width: img.w }
+              }
+            >
+              <img src={img.src} alt="" loading="lazy" decoding="async" />
+            </motion.div>
+          </div>
         ))}
       </div>
 

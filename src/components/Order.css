@@ -9,16 +9,22 @@
   padding-block: clamp(4rem, 10vh, 8rem);
 }
 
-/* Corner image layer */
+/* Image layer — each image is centred in its own full-size cell, so at rest
+   they stack perfectly on top of one another; the scroll transform scatters
+   them outward to their resting spots. */
 .order__images {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 3;
   pointer-events: none;
 }
-.order__img {
+.order__img-cell {
   position: absolute;
-  width: clamp(104px, 12.5vw, 188px);
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.order__img {
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 10px;
@@ -30,22 +36,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-.order__img--tl {
-  top: clamp(1rem, 4vh, 3rem);
-  left: clamp(1rem, 3vw, 3rem);
-}
-.order__img--tr {
-  top: clamp(1rem, 4vh, 3rem);
-  right: clamp(1rem, 3vw, 3rem);
-}
-.order__img--bl {
-  bottom: clamp(1rem, 4vh, 3rem);
-  left: clamp(1rem, 3vw, 3rem);
-}
-.order__img--br {
-  bottom: clamp(1rem, 4vh, 3rem);
-  right: clamp(1rem, 3vw, 3rem);
 }
 
 /* Centre CTA */

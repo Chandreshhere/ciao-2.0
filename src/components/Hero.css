@@ -125,8 +125,14 @@
   background: var(--ink);
 }
 .hero__slides {
+  /* Fixed full-viewport height anchored to the bottom: as the stage grows on
+     scroll it simply reveals more of this stable image instead of re-cropping
+     it (object-fit: cover would otherwise reframe as the box height changes). */
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
 }
 .hero__slide {
   position: absolute;
@@ -141,17 +147,7 @@
   object-fit: cover;
   object-position: center 42%;
 }
-.hero__slide img.is-kenburns {
-  animation: kenburns 7s ease-out forwards;
-}
-@keyframes kenburns {
-  from {
-    transform: scale(1.04);
-  }
-  to {
-    transform: scale(1.13);
-  }
-}
+/* Ken Burns zoom removed — the hero images stay still (no scale animation). */
 
 /* — Control widget — */
 .hero__controls {
@@ -256,11 +252,5 @@
   .hero__controls {
     gap: 0.4rem;
     padding: 0.55rem 0.6rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__slide img.is-kenburns {
-    animation: none;
   }
 }

@@ -157,7 +157,6 @@ export default function Hero({ ready }) {
             <img
               src={slides[base].src}
               alt={slides[base].label}
-              className={reduced ? '' : 'is-kenburns'}
               loading="eager"
               decoding="async"
             />
@@ -178,7 +177,6 @@ export default function Hero({ ready }) {
               <img
                 src={slides[index].src}
                 alt={slides[index].label}
-                className={reduced ? '' : 'is-kenburns'}
                 loading="eager"
                 decoding="async"
               />
