@@ -54,7 +54,9 @@ export default function Hero({ ready }) {
     offset: ['start start', 'end end'],
   })
   const bandY = useTransform(scrollYProgress, [0, 0.6], ['0vh', '-65vh'])
-  const stageHeight = useTransform(scrollYProgress, [0, 0.8], ['46vh', '100vh'])
+  // Phones start with a taller image (and a shorter text band) so the hero
+  // fills the screen instead of leaving an empty band under the nav.
+  const stageHeight = useTransform(scrollYProgress, [0, 0.8], [mobile ? '60vh' : '46vh', '100vh'])
   // Parallax: the carousel images zoom in and drift up as the hero scrolls.
   const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
   const imgY = useTransform(scrollYProgress, [0, 1], ['0vh', '-7vh'])

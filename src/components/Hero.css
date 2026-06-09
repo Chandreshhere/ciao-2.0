@@ -254,3 +254,15 @@
     padding: 0.55rem 0.6rem;
   }
 }
+
+/* Phones: taller image + shorter text band so the hero fills the viewport and
+   the text/image sit higher (no empty band under the nav). Matches the 60vh
+   stage start set in Hero.jsx. */
+@media (max-width: 860px) {
+  .hero {
+    --hero-split: 60vh;
+  }
+  .hero__band {
+    padding-top: clamp(4.5rem, 13vh, 6rem);
+  }
+}
