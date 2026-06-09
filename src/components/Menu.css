@@ -174,4 +174,12 @@
   .menu__panel {
     position: static;
   }
+  /* Trim the long menu on mobile — show the first few per category; the
+     complete list lives behind the "View Full Menu" button. */
+  .menu__list .menu__item:nth-child(n + 4) {
+    display: none;
+  }
+  .menu__list .menu__item:nth-child(3) {
+    border-bottom: 0;
+  }
 }
