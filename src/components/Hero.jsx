@@ -37,9 +37,8 @@ function Icon({ name }) {
 export default function Hero({ ready }) {
   const reduced = useReducedMotion()
   const mobile = useIsMobile()
-  // On mobile the scroll-pin slides the title up behind the fixed nav and crops
-  // the image — so render a plain static hero (text + image) there instead.
-  const flat = reduced || mobile
+  // Same scroll-pin image-grow as desktop, on mobile too (the nav now hides on
+  // scroll-down, so the rising text no longer collides with the header).
   const slides = hero.slides
   const [index, setIndex] = useState(0)
   const [base, setBase] = useState(0) // image settled underneath the wipe
@@ -53,11 +52,19 @@ export default function Hero({ ready }) {
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
-  const bandY = useTransform(scrollYProgress, [0, 0.6], ['0vh', '-65vh'])
-  // Phones start with a taller image (and a shorter text band) so the hero
-  // fills the screen instead of leaving an empty band under the nav.
-  const stageHeight = useTransform(scrollYProgress, [0, 0.8], [mobile ? '60vh' : '46vh', '100vh'])
-  // Parallax: the carousel images zoom in and drift up as the hero scrolls.
+  // Mobile uses svh (stable against the address bar) and starts from the 52svh
+  // split; desktop keeps its vh values. The band text rises as the image grows.
+  const bandY = useTransform(
+    scrollYProgress,
+    [0, 0.6],
+    mobile ? ['0svh', '-50svh'] : ['0vh', '-65vh'],
+  )
+  const stageHeight = useTransform(
+    scrollYProgress,
+    [0, 0.8],
+    mobile ? ['52svh', '100svh'] : ['46vh', '100vh'],
+  )
+  // Parallax zoom — desktop only; on mobile it cropped the image, so skip it.
   const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
   const imgY = useTransform(scrollYProgress, [0, 1], ['0vh', '-7vh'])
 
@@ -108,7 +115,7 @@ export default function Hero({ ready }) {
       id="top"
       aria-labelledby="hero-title"
       ref={sectionRef}
-      style={flat ? undefined : { height: '200vh' }}
+      style={reduced ? undefined : { height: mobile ? '170svh' : '200vh' }}
     >
       <div className="hero__sticky">
       {/* — Top band: gradient stays fixed; only the text inside moves up — */}
@@ -116,7 +123,7 @@ export default function Hero({ ready }) {
         <div className="glow hero__glow" aria-hidden="true" />
         <motion.div
           className="hero__band-inner shell"
-          style={flat ? undefined : { y: bandY }}
+          style={reduced ? undefined : { y: bandY }}
         >
           <div className="hero__headline">
             <h1 className="display hero__title" id="hero-title">
@@ -159,11 +166,11 @@ export default function Hero({ ready }) {
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, ease: EASE, delay: 0 }}
-        style={flat ? undefined : { height: stageHeight }}
+        style={reduced ? undefined : { height: stageHeight }}
       >
         <motion.div
           className="hero__slides"
-          style={flat ? undefined : { scale: imgScale, y: imgY }}
+          style={reduced || mobile ? undefined : { scale: imgScale, y: imgY }}
         >
           {/* Base layer: the settled image, always covering the stage. */}
           <div className="hero__slide">
