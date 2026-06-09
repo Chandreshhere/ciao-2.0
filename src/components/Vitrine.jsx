@@ -29,7 +29,7 @@ function Feature({ item }) {
   )
 }
 
-function VitrinePanel({ item, i, count, progress, reduced }) {
+function VitrinePanel({ item, i, count, progress, flat }) {
   // Cascading reveal: panel i holds until the scroll reaches its turn, then
   // rises — and keeps rising at the same rate as the panels after it, so once
   // revealed, the stacked panels move up together. The last panel stays put.
@@ -47,7 +47,7 @@ function VitrinePanel({ item, i, count, progress, reduced }) {
   return (
     <motion.div
       className="vpanel"
-      style={reduced ? undefined : { y, zIndex: count - i }}
+      style={flat ? undefined : { y, zIndex: count - i }}
     >
       <div className="vpanel__inner">
         <div
@@ -70,9 +70,9 @@ function VitrinePanel({ item, i, count, progress, reduced }) {
 export default function Vitrine() {
   const reduced = useReducedMotion()
   const mobile = useIsMobile()
-  // Keep the pinned cascade on mobile (like desktop) but with less scroll
-  // travel per panel so the section isn't a tall empty scroll.
-  const perPanel = mobile ? 55 : 75
+  // The pinned cascade stacks several panels at once, which on a narrow phone
+  // reads as overlapping content — so on mobile render a plain stacked list.
+  const flat = reduced || mobile
   const seqRef = useRef(null)
   const { scrollYProgress: progress } = useScroll({
     target: seqRef,
@@ -82,11 +82,11 @@ export default function Vitrine() {
 
   return (
     <section
-      className={`section vitrine${reduced ? ' is-static' : ''}`}
+      className={`section vitrine${flat ? ' is-static' : ''}`}
       id="vitrine"
       aria-labelledby="vitrine-title"
       ref={seqRef}
-      style={reduced ? undefined : { height: `${N * perPanel}vh` }}
+      style={flat ? undefined : { height: `${N * 75}vh` }}
     >
       <div className="glow vitrine__glow" aria-hidden="true" />
 
@@ -98,7 +98,7 @@ export default function Vitrine() {
             i={i}
             count={N}
             progress={progress}
-            reduced={reduced}
+            flat={flat}
           />
         ))}
       </div>
