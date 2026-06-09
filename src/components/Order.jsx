@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'motion/react'
 import { brand, order } from '../data/content'
 import GoldHeading from './ui/GoldHeading'
 import './Order.css'
@@ -9,7 +9,7 @@ const IMAGES = [
   { src: '/gallery/product-02.png', w: 'clamp(154px, 17.5vw, 268px)', x: '-33vw', y: '-21vh' },
   { src: '/gallery/product-11.png', w: 'clamp(116px, 12.5vw, 196px)', x: '31vw', y: '-27vh' },
   { src: '/gallery/product-07.png', w: 'clamp(134px, 15vw, 228px)', x: '-37vw', y: '20vh' },
-  { src: '/gallery/product-10.png', w: 'clamp(146px, 16.5vw, 250px)', x: '35vw', y: '15vh' },
+  { src: '/gallery/product-10.png', w: 'clamp(168px, 19vw, 286px)', x: '35vw', y: '13vh' },
 ]
 
 const FACTS = [
@@ -32,22 +32,24 @@ export default function Order() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'start center'],
+    offset: ['start end', 'center 0.7'],
   })
+  // Spring-smoothed progress so the images glide rather than track scroll 1:1.
+  const p = useSpring(scrollYProgress, { stiffness: 90, damping: 24, restDelta: 0.001 })
 
   const waHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     order.whatsappText,
   )}`
 
   // 0 = images stacked on top of each other at the centre · 1 = scattered.
-  const x1 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[0].x])
-  const y1 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[0].y])
-  const x2 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[1].x])
-  const y2 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[1].y])
-  const x3 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[2].x])
-  const y3 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[2].y])
-  const x4 = useTransform(scrollYProgress, [0, 1], ['0vw', IMAGES[3].x])
-  const y4 = useTransform(scrollYProgress, [0, 1], ['0vh', IMAGES[3].y])
+  const x1 = useTransform(p, [0, 1], ['0vw', IMAGES[0].x])
+  const y1 = useTransform(p, [0, 1], ['0vh', IMAGES[0].y])
+  const x2 = useTransform(p, [0, 1], ['0vw', IMAGES[1].x])
+  const y2 = useTransform(p, [0, 1], ['0vh', IMAGES[1].y])
+  const x3 = useTransform(p, [0, 1], ['0vw', IMAGES[2].x])
+  const y3 = useTransform(p, [0, 1], ['0vh', IMAGES[2].y])
+  const x4 = useTransform(p, [0, 1], ['0vw', IMAGES[3].x])
+  const y4 = useTransform(p, [0, 1], ['0vh', IMAGES[3].y])
   const spread = [
     { x: x1, y: y1 },
     { x: x2, y: y2 },
