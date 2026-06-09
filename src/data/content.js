@@ -20,7 +20,7 @@ export const hero = {
   // Rich title: array of lines, each an array of segments. gold:true → italic gold.
   titleRich: [
     [{ t: 'Crafted in ' }, { t: 'Paris.', gold: true }],
-    [{ t: 'Baked ' }, { t: 'for You.', gold: true }],
+    [{ t: 'Baked', gold: true }, { t: ' for You.' }],
   ],
   titleLines: ['Crafted in', 'Paris.', 'Baked for You.'],
   sub: 'Modern French pâtisserie — macarons, éclairs, entremets, and bespoke celebration cakes. Every creation balanced, precise, and beautiful.',

@@ -72,15 +72,15 @@
   font-family: var(--font-body);
   font-weight: 200;
   font-size: var(--fs-display);
-  line-height: 1.14;
+  line-height: 1;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 .hero__line {
   display: block;
   overflow: hidden;
-  /* Roomy vertical padding so the script's swashes/descenders aren't clipped. */
-  padding-block: 0.16em;
+  /* Just enough vertical padding so the script's swashes aren't clipped. */
+  padding-block: 0.08em;
 }
 .hero__line-inner {
   display: inline-block;
@@ -91,7 +91,7 @@
   /* Accent words: "You're Invited" script, gold. Bumped up slightly so the
      script's smaller visual size balances the PP Mori base. */
   font-family: 'Youre Invited', var(--font-display);
-  font-style: normal;
+  font-style: italic;
   font-weight: 400;
   font-size: 1.18em;
   letter-spacing: 0;

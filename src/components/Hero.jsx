@@ -50,6 +50,9 @@ export default function Hero({ ready }) {
   })
   const bandY = useTransform(scrollYProgress, [0, 0.6], ['0vh', '-65vh'])
   const stageHeight = useTransform(scrollYProgress, [0, 0.8], ['46vh', '100vh'])
+  // Parallax: the carousel images zoom in and drift up as the hero scrolls.
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0vh', '-7vh'])
 
   const go = useCallback(
     (d) => {
@@ -151,7 +154,10 @@ export default function Hero({ ready }) {
         transition={{ duration: 0.6, ease: EASE, delay: 0 }}
         style={reduced ? undefined : { height: stageHeight }}
       >
-        <div className="hero__slides">
+        <motion.div
+          className="hero__slides"
+          style={reduced ? undefined : { scale: imgScale, y: imgY }}
+        >
           {/* Base layer: the settled image, always covering the stage. */}
           <div className="hero__slide">
             <img
@@ -182,7 +188,7 @@ export default function Hero({ ready }) {
               />
             </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* — Control widget — */}
         <div className="hero__controls" role="group" aria-label="Hero carousel controls">
