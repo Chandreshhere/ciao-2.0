@@ -1,0 +1,130 @@
+/* Enquiry form — a light cream card that sits on the dark footer. */
+.cform {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.4rem, 2.8vw, 2rem);
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+}
+.cform__title {
+  font-weight: 200;
+  font-size: var(--fs-h4);
+  color: var(--ink);
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cform__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+/* — Floating-label field — */
+.field {
+  position: relative;
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.05rem 0.85rem 0.45rem;
+  transition:
+    border-color 0.4s var(--ease-out-expo),
+    box-shadow 0.4s var(--ease-out-expo);
+  appearance: none;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 82px;
+  padding-top: 1.2rem;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184, 149, 74, 0.16);
+}
+
+.field label {
+  position: absolute;
+  left: 0.85rem;
+  top: 0.9rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.3s var(--ease-out-expo),
+    color 0.3s var(--ease-out-expo);
+}
+
+/* Floating behaviour for inputs/textarea with the placeholder trick */
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:focus + label,
+.field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-0.6rem) scale(0.74);
+  color: var(--gold);
+}
+
+/* Select & date always show a floated label (no :placeholder-shown support) */
+.label--select,
+.label--date {
+  transform: translateY(-0.6rem) scale(0.74);
+  color: var(--gold);
+}
+.field select:focus ~ .label--select,
+.field input[type='date']:focus + .label--date {
+  color: var(--gold);
+}
+
+.field select {
+  cursor: pointer;
+}
+.field__caret {
+  position: absolute;
+  right: 0.95rem;
+  top: 1.15rem;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.field input[type='date'] {
+  color: var(--ink);
+}
+
+.cform__submit {
+  width: 100%;
+}
+.cform__success {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--gold);
+  min-height: 1.2em;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .cform__grid {
+    grid-template-columns: 1fr;
+  }
+}

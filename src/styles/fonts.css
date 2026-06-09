@@ -1,0 +1,76 @@
+/* — PP Eiko (display serif, high-contrast). Free version is upright-only;
+   italic emphasis is browser-synthesised. — */
+@font-face {
+  font-family: 'PP Eiko';
+  src: url('/fonts/PPEiko-Thin.woff2') format('woff2');
+  font-weight: 100 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Eiko';
+  src: url('/fonts/PPEiko-Medium.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Eiko';
+  src: url('/fonts/PPEiko-Heavy.woff2') format('woff2');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* — PP Mori (geometric sans, body/UI) — */
+@font-face {
+  font-family: 'PP Mori';
+  src: url('/fonts/PPMori-Extralight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('/fonts/PPMori-Regular.woff2') format('woff2');
+  font-weight: 300 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('/fonts/PPMori-RegularItalic.woff2') format('woff2');
+  font-weight: 300 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('/fonts/PPMori-SemiBold.woff2') format('woff2');
+  font-weight: 500 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mori';
+  src: url('/fonts/PPMori-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 500 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* — You're Invited (calligraphic script, hero display only) — */
+@font-face {
+  font-family: 'Youre Invited';
+  src: url('/fonts/YoureInvited.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Youre Invited';
+  src: url('/fonts/YoureInvited-Heavy.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

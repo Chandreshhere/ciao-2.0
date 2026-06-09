@@ -1,0 +1,60 @@
+:root {
+  /* — Palette — */
+  --pink: #fde8e0; /* soft petal */
+  --blush: #fad8cc; /* warmer blush */
+  --cream: #fdf6f0; /* page base */
+  --gold: #b8954a; /* primary metallic */
+  --gold-2: #d4ad6a; /* lighter gold (hovers, accents) */
+  --gold-3: #e8cfa0; /* pale gold (hairlines, glows) */
+  --ink: #2a1a0e; /* near-black espresso brown */
+  --muted: #9a7a6a; /* secondary text */
+  --border: rgba(184, 149, 74, 0.25);
+  --glass: rgba(253, 246, 240, 0.82);
+
+  /* — Spacing scale (rem) — */
+  --s-1: 0.5rem;
+  --s-2: 0.75rem;
+  --s-3: 1rem;
+  --s-4: 1.5rem;
+  --s-5: 2rem;
+  --s-6: 3rem;
+  --s-7: 4rem;
+  --s-8: 5rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  --section-y: clamp(5rem, 10vw, 9rem);
+  --gutter: clamp(1.1rem, 3vw, 2.75rem);
+  --maxw: 1440px;
+
+  /* — Type — */
+  --font-display: 'PP Eiko', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'PP Mori', 'Helvetica Neue', Arial, sans-serif;
+  --font-script: 'Pinyon Script', 'PP Eiko', cursive;
+
+  /* — Fluid type scale —
+     Anchored to the hero: --fs-display is the hero title (the ceiling — no
+     text on the site is larger) and --fs-body is the hero sub. Every other
+     step is derived to sit between the two, so the whole site shares one
+     consistent rhythm that steps down from the hero. */
+  --fs-display: clamp(2.4rem, 6vw, 5rem); /* hero title — the largest text */
+  --fs-h1: clamp(2.1rem, 5.2vw, 4rem);
+  --fs-h2: clamp(1.7rem, 4vw, 2.9rem);
+  --fs-h3: clamp(1.5rem, 3vw, 2.2rem);
+  --fs-h4: clamp(1.3rem, 2.4vw, 1.7rem);
+  --fs-h5: clamp(1.1rem, 2vw, 1.35rem);
+  --fs-lede: clamp(1.05rem, 1.4vw, 1.2rem);
+  --fs-body: clamp(0.95rem, 1.2vw, 1.1rem); /* hero sub — body anchor */
+  --fs-sm: 0.92rem;
+  --fs-xs: 0.84rem;
+  --fs-eyebrow: 0.68rem; /* uppercase kickers / labels */
+  --fs-micro: 0.58rem; /* tiny captions, chips, badges */
+
+  /* — Motion — */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.77, 0, 0.18, 1);
+
+  /* — Elevation — */
+  --shadow-soft: 0 24px 60px -28px rgba(42, 26, 14, 0.28);
+  --shadow-gold: 0 14px 30px -14px rgba(184, 149, 74, 0.45);
+}

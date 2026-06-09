@@ -1,0 +1,67 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.loader__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 51%;
+  background: var(--ink);
+  /* faint vertical pinstripe + thin gold inner edge */
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(232, 207, 160, 0.05) 0,
+      rgba(232, 207, 160, 0.05) 1px,
+      transparent 1px,
+      transparent 16px
+    );
+}
+.loader__panel--l {
+  left: 0;
+  border-right: 1px solid rgba(212, 173, 106, 0.5);
+}
+.loader__panel--r {
+  right: 0;
+  border-left: 1px solid rgba(212, 173, 106, 0.5);
+}
+
+.loader__mark {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  color: var(--gold-2);
+}
+
+.loader__kicker {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  opacity: 0.85;
+}
+
+.loader__logo {
+  width: clamp(220px, 34vw, 360px);
+  height: auto;
+  display: block;
+  margin: 0.2rem 0;
+}
+
+.loader__rule {
+  width: 64px;
+  height: 1px;
+  margin-top: 0.4rem;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}

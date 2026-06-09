@@ -1,0 +1,141 @@
+.menupage {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+  padding-bottom: clamp(4rem, 10vh, 8rem);
+}
+
+/* — Top bar — */
+.menupage__top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(253, 246, 240, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.menupage__top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: clamp(58px, 8vh, 72px);
+}
+.menupage__back {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  transition: color 0.3s var(--ease-out-expo);
+}
+.menupage__back:hover {
+  color: var(--gold);
+}
+.menupage__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.menupage__brand-ciao {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.menupage__brand-pat {
+  font-family: 'Youre Invited', var(--font-display);
+  color: var(--gold);
+  font-size: 1.1rem;
+}
+
+/* — Heading — */
+.menupage__head {
+  text-align: center;
+  padding-block: clamp(2.5rem, 7vh, 5rem) clamp(1.5rem, 4vh, 3rem);
+}
+.menupage__kicker {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.menupage__title {
+  font-family: var(--font-body);
+  font-weight: 200;
+  font-size: var(--fs-display);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.menupage__title em {
+  font-family: 'Youre Invited', var(--font-display);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.15em;
+  color: var(--gold);
+}
+.menupage__note {
+  margin-top: 1rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* — Full menu list — */
+.menupage__list {
+  display: grid;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+  max-width: 920px;
+}
+.menupage__cat-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  color: var(--ink);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.menupage__cat ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+.menupage__item-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.menupage__item-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-h5);
+  color: var(--ink);
+}
+.menupage__dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(42, 26, 14, 0.3);
+  transform: translateY(-0.2em);
+}
+.menupage__item-price {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.menupage__item-desc {
+  margin-top: 0.3rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+}

@@ -1,0 +1,64 @@
+.btn {
+  --btn-fg: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 1.05em 1.9em;
+  border-radius: 999px;
+  color: var(--btn-fg);
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    box-shadow 0.5s var(--ease-out-expo),
+    background-color 0.5s var(--ease-out-expo),
+    border-color 0.5s var(--ease-out-expo),
+    color 0.5s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Gold filled */
+.btn--gold {
+  --btn-fg: var(--cream);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  box-shadow: var(--shadow-gold);
+}
+.btn--gold:hover {
+  box-shadow: 0 20px 38px -14px rgba(184, 149, 74, 0.6);
+}
+
+/* Ghost outline */
+.btn--ghost {
+  --btn-fg: var(--ink);
+  border: 1px solid var(--border);
+  background: transparent;
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+  background: rgba(184, 149, 74, 0.06);
+  box-shadow: 0 16px 30px -18px rgba(42, 26, 14, 0.3);
+}
+
+/* WhatsApp — brand gold (no green) */
+.btn--whatsapp {
+  --btn-fg: var(--cream);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  box-shadow: var(--shadow-gold);
+}
+.btn--whatsapp:hover {
+  box-shadow: 0 20px 38px -14px rgba(184, 149, 74, 0.6);
+}
+
+.btn svg {
+  width: 1.15em;
+  height: 1.15em;
+}
