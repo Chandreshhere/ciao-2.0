@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { motion, useScroll, useSpring } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useSpring, useTransform, useMotionTemplate } from 'motion/react'
 import { useLenis } from './lib/useLenis'
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
@@ -59,6 +59,16 @@ export default function App() {
     window.scrollTo(0, 0)
   }, [route])
 
+  // Curved/arc top on the section that slides over the pinned hero — the dome
+  // stretches taller as you scroll it up, then flattens as it settles.
+  const belowRef = useRef(null)
+  const { scrollYProgress: belowProgress } = useScroll({
+    target: belowRef,
+    offset: ['start end', 'start start'],
+  })
+  const arc = useTransform(belowProgress, [0, 0.82, 1], [40, 200, 150])
+  const arcRadius = useMotionTemplate`50% ${arc}px`
+
   const isHome = route === 'home'
 
   return (
@@ -71,13 +81,20 @@ export default function App() {
       {isHome && (
         <main>
           <Hero ready={ready} />
-          <Statement />
-          <Ticker />
-          <TrustBar />
-          <Vitrine />
-          <Menu />
-          <Chef />
-          <Order />
+          <motion.div
+            className="below-hero"
+            id="start"
+            ref={belowRef}
+            style={{ borderTopLeftRadius: arcRadius, borderTopRightRadius: arcRadius }}
+          >
+            <Statement />
+            <Ticker />
+            <TrustBar />
+            <Vitrine />
+            <Menu />
+            <Chef />
+            <Order />
+          </motion.div>
         </main>
       )}
       {route === 'menu' && <MenuPage />}

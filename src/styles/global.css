@@ -112,6 +112,15 @@ button {
   padding-block: var(--section-y);
 }
 
+/* Post-hero content slides up over the pinned hero (the hero stays stuck
+   behind while this overlaps on top as you scroll). */
+.below-hero {
+  position: relative;
+  z-index: 2;
+  margin-top: -112vh;
+  background: var(--cream);
+}
+
 /* — Sub-page scaffold (Gallery / Menu / About) — */
 .page {
   padding-top: clamp(150px, 19vh, 224px);

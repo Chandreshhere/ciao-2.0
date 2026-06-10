@@ -7,6 +7,18 @@
   display: grid;
   place-items: center;
   padding-block: clamp(4rem, 10vh, 8rem);
+  /* Same blush gradient as the horizontal Chef section, matched to the phase
+     it sits at where the two sections meet (so there's no visible seam). */
+  background: linear-gradient(
+    90deg,
+    #fdf6f0 0%,
+    #fad8cc 22%,
+    #f3e1d6 50%,
+    #fad8cc 78%,
+    #fdf6f0 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 0;
 }
 
 /* Image layer — each image is centred in its own full-size cell, so at rest

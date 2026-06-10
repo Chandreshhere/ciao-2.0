@@ -1,7 +1,9 @@
 .statement {
   position: relative;
   overflow: hidden;
-  background: var(--cream);
+  /* transparent so the rounded/arced top of the .below-hero wrapper shows
+     through (a cream bg here would paint a square over the curve). */
+  background: transparent;
   padding-block: clamp(5rem, 14vh, 11rem);
 }
 

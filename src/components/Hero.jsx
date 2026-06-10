@@ -1,240 +1,130 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { hero } from '../data/content'
-import { useIsMobile } from '../lib/useMediaQuery'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import './Hero.css'
 
-const EASE = [0.22, 1, 0.36, 1]
-const AUTOPLAY_MS = 5200
+// Each line is a list of segments; em:true renders in the gold script.
+const LINES = [
+  [{ t: 'This is not' }],
+  [{ t: 'just ' }, { t: 'dessert.', em: true }],
+  [{ t: 'This is our' }],
+  [{ t: 'philosophy.', em: true }],
+  [{ t: 'Made to order.' }],
+]
 
-function Icon({ name }) {
-  const p = {
-    prev: 'M15 5l-7 7 7 7',
-    next: 'M9 5l7 7-7 7',
-  }
-  if (name === 'pause') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="8" y="6" width="2.6" height="12" rx="1" fill="currentColor" />
-        <rect x="13.4" y="6" width="2.6" height="12" rx="1" fill="currentColor" />
-      </svg>
-    )
-  }
-  if (name === 'play') {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
-      </svg>
-    )
-  }
+function Line({ segs }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
-      <path d={p[name]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <span>
+      {segs.map((s, j) => (s.em ? <em key={j}>{s.t}</em> : <span key={j}>{s.t}</span>))}
+    </span>
   )
 }
 
-export default function Hero({ ready }) {
+export default function Hero() {
   const reduced = useReducedMotion()
-  const mobile = useIsMobile()
-  // Same scroll-pin image-grow as desktop, on mobile too (the nav now hides on
-  // scroll-down, so the rising text no longer collides with the header).
-  const slides = hero.slides
-  const [index, setIndex] = useState(0)
-  const [base, setBase] = useState(0) // image settled underneath the wipe
-  const [dir, setDir] = useState(1) // +1 → new wipes in from the right
-  const [playing, setPlaying] = useState(!reduced)
-
-  // — Scroll-driven pin: top band slides up while the image grows from the
-  //   bottom to fill the viewport, then the section unpins into the next one. —
-  const sectionRef = useRef(null)
+  const ref = useRef(null)
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: ref,
     offset: ['start start', 'end end'],
   })
-  // Mobile uses svh (stable against the address bar) and starts from the 52svh
-  // split; desktop keeps its vh values. The band text rises as the image grows.
-  const bandY = useTransform(
-    scrollYProgress,
-    [0, 0.6],
-    mobile ? ['0svh', '-50svh'] : ['0vh', '-65vh'],
-  )
-  const stageHeight = useTransform(
-    scrollYProgress,
-    [0, 0.8],
-    mobile ? ['52svh', '100svh'] : ['46vh', '100vh'],
-  )
-  // Parallax zoom — desktop only; on mobile it cropped the image, so skip it.
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
-  const imgY = useTransform(scrollYProgress, [0, 1], ['0vh', '-7vh'])
 
-  const go = useCallback(
-    (d) => {
-      setDir(d)
-      setIndex((i) => (i + d + slides.length) % slides.length)
-    },
-    [slides.length],
-  )
+  // Phase 0 — intro labels, visible at rest, fade away as scrolling begins.
+  const introOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0])
+  const introY = useTransform(scrollYProgress, [0, 0.1], ['0px', '-26px'])
+  // Phase 1 — centre statement rises from behind the cake, unblurring upward.
+  const textY = useTransform(scrollYProgress, [0.1, 0.44], ['10vh', '-116vh'])
+  // Parallax zoom on both layers.
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.06, 1.26])
+  const fgScale = useTransform(scrollYProgress, [0, 1], [1.12, 1.3])
+  // Phase 2 — side text fades/slides in as the centre text rises up.
+  const lOpacity = useTransform(scrollYProgress, [0.26, 0.4], [0, 1])
+  const lX = useTransform(scrollYProgress, [0.26, 0.4], ['-26px', '0px'])
+  const rOpacity = useTransform(scrollYProgress, [0.3, 0.44], [0, 1])
+  const rX = useTransform(scrollYProgress, [0.3, 0.44], ['26px', '0px'])
 
-  const goTo = useCallback(
-    (i) => {
-      setDir(i > index ? 1 : -1)
-      setIndex(i)
-    },
-    [index],
-  )
-
-  useEffect(() => {
-    if (!playing || reduced) return
-    const id = setInterval(() => {
-      setDir(1)
-      setIndex((i) => (i + 1) % slides.length)
-    }, AUTOPLAY_MS)
-    return () => clearInterval(id)
-  }, [playing, reduced, slides.length])
-
-  // Curtain wipe: the incoming image is revealed in place from one edge
-  // (0 → 100%) on top of the settled base image, so the old one never
-  // disappears to the brown stage background.
-  const slideVariants = {
-    enter: (d) => ({ clipPath: d >= 0 ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)' }),
-    center: { clipPath: 'inset(0 0 0 0%)' },
-  }
-
-  const lineVariants = {
-    hidden: { y: '108%' },
-    show: (i) => ({
-      y: '0%',
-      transition: { duration: 0.7, ease: EASE, delay: 0.05 + i * 0.08 },
-    }),
-  }
+  const lineStyle = reduced ? undefined : { x: '-50%', y: textY }
 
   return (
-    <section
-      className="hero"
-      id="top"
-      aria-labelledby="hero-title"
-      ref={sectionRef}
-      style={reduced ? undefined : { height: mobile ? '170svh' : '200vh' }}
-    >
-      <div className="hero__sticky">
-      {/* — Top band: gradient stays fixed; only the text inside moves up — */}
-      <div className="hero__band">
-        <div className="glow hero__glow" aria-hidden="true" />
+    <section className="bhero" id="top" ref={ref} aria-label="Ciao Patisserie">
+      <div className="bhero__sticky">
+        <motion.img
+          className="bhero__bg"
+          src="/hero/1.png"
+          alt=""
+          style={reduced ? undefined : { scale: bgScale }}
+        />
+
+        {/* Phase 0 — intro labels framing the cake */}
         <motion.div
-          className="hero__band-inner shell"
-          style={reduced ? undefined : { y: bandY }}
+          className="bhero__intro"
+          style={reduced ? undefined : { opacity: introOpacity, y: introY }}
         >
-          <div className="hero__headline">
-            <h1 className="display hero__title" id="hero-title">
-              {hero.titleRich.map((line, i) => (
-                <span className="hero__line" key={i}>
-                  <motion.span
-                    className="hero__line-inner"
-                    custom={i}
-                    initial="hidden"
-                    animate={ready ? 'show' : 'hidden'}
-                    variants={lineVariants}
-                  >
-                    {line.map((seg, j) =>
-                      seg.gold ? (
-                        <em key={j}>{seg.t}</em>
-                      ) : (
-                        <span key={j}>{seg.t}</span>
-                      ),
-                    )}
-                  </motion.span>
-                </span>
+          <div className="bhero__intro-center">
+            <span className="bhero__intro-eyebrow">French Pâtisserie · Gurgaon</span>
+            <span className="bhero__intro-title">
+              Crafted in <em>Paris.</em>
+            </span>
+          </div>
+          <span className="bhero__intro-label bhero__intro--tl">Ciao Patisserie</span>
+          <span className="bhero__intro-label bhero__intro--tr">Est. 2017</span>
+          <span className="bhero__intro-label bhero__intro--bl">Handcrafted fresh</span>
+          <span className="bhero__intro-label bhero__intro--br">Made to order</span>
+        </motion.div>
+
+        {/* Phase 1 — centre statement: clean sharp text that reveals from the
+            focal line upward as it rises (no blur copy, so no shadow). */}
+        <div className="bhero__text" aria-hidden="true">
+          <div className="bhero__sharp">
+            <motion.div className="bhero__lines bhero__lines--sharp" style={lineStyle}>
+              {LINES.map((segs, i) => (
+                <Line key={i} segs={segs} />
               ))}
-            </h1>
-          </div>
-
-          <motion.div
-            className="hero__aside"
-            initial={{ opacity: 0, y: 16 }}
-            animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.25 }}
-          >
-            <p className="hero__sub">{hero.sub}</p>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* — Lower band: full-bleed carousel that grows to fill the viewport — */}
-      <motion.div
-        className="hero__stage"
-        initial={{ opacity: 0 }}
-        animate={ready ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, ease: EASE, delay: 0 }}
-        style={reduced ? undefined : { height: stageHeight }}
-      >
-        <motion.div
-          className="hero__slides"
-          style={reduced || mobile ? undefined : { scale: imgScale, y: imgY }}
-        >
-          {/* Base layer: the settled image, always covering the stage. */}
-          <div className="hero__slide">
-            <img
-              src={slides[base].src}
-              alt={slides[base].label}
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-
-          {/* Top layer: the incoming image wiping in over the base. */}
-          {index !== base && (
-            <motion.div
-              key={index}
-              className="hero__slide hero__slide--top"
-              custom={dir}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              transition={{ duration: 0.9, ease: EASE }}
-              onAnimationComplete={() => setBase(index)}
-            >
-              <img
-                src={slides[index].src}
-                alt={slides[index].label}
-                loading="eager"
-                decoding="async"
-              />
             </motion.div>
-          )}
-        </motion.div>
-
-        {/* — Control widget — */}
-        <div className="hero__controls" role="group" aria-label="Hero carousel controls">
-          <button className="hero__ctrl" onClick={() => go(-1)} aria-label="Previous slide">
-            <Icon name="prev" />
-          </button>
-          <button
-            className="hero__ctrl"
-            onClick={() => setPlaying((p) => !p)}
-            aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
-          >
-            <Icon name={playing ? 'pause' : 'play'} />
-          </button>
-          <button className="hero__ctrl" onClick={() => go(1)} aria-label="Next slide">
-            <Icon name="next" />
-          </button>
-
-          <div className="hero__thumbs">
-            {slides.map((s, i) => (
-              <button
-                key={s.src}
-                className={`hero__thumb${i === index ? ' is-active' : ''}`}
-                onClick={() => goTo(i)}
-                aria-label={`Go to ${s.label}`}
-                aria-current={i === index}
-              >
-                <img src={s.src} alt="" loading="lazy" decoding="async" />
-              </button>
-            ))}
           </div>
         </div>
-      </motion.div>
+
+        <motion.img
+          className="bhero__fg"
+          src="/hero/2.png"
+          alt="Ciao Patisserie signature cake"
+          style={reduced ? undefined : { scale: fgScale }}
+        />
+
+        {/* Phase 2 — side text */}
+        <motion.div
+          className="bhero__side bhero__side--left"
+          style={reduced ? undefined : { opacity: lOpacity, x: lX }}
+        >
+          <span className="bhero__side-eyebrow">Our Craft</span>
+          <p className="bhero__side-text">
+            Handcrafted fresh to order — no two ever quite alike.
+          </p>
+        </motion.div>
+        <motion.div
+          className="bhero__side bhero__side--right"
+          style={reduced ? undefined : { opacity: rOpacity, x: rX }}
+        >
+          <span className="bhero__side-eyebrow">Our Promise</span>
+          <p className="bhero__side-text">
+            Le Cordon Bleu trained. Belgian chocolate, always.
+          </p>
+        </motion.div>
+
+        <h1 className="sr-only">
+          Ciao Patisserie — crafted in Paris, this is not just dessert.
+        </h1>
+        <a className="bhero__scroll" href="#start">
+          SCROLL
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M7 10l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
       </div>
     </section>
   )
