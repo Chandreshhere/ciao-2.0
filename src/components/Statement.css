@@ -115,12 +115,18 @@
 
 @media (max-width: 640px) {
   .statement__text {
-    max-width: 24ch;
+    max-width: 22ch;
   }
   .statement__accent {
     cursor: default;
   }
   .statement__accent::after {
+    display: none;
+  }
+  /* Hover-driven image reveal isn't meaningful on touch — hide it so it
+     can't pop in awkwardly mid-tap. */
+  .statement__media,
+  .statement__reveal {
     display: none;
   }
 }

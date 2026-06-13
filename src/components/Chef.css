@@ -223,31 +223,79 @@
   transform: none;
 }
 
-/* — Phones: simple stacked column (no horizontal pin) — */
-@media (max-width: 760px) {
-  .chefx {
-    height: auto !important;
-  }
-  .chefx__sticky {
-    position: static;
-    height: auto;
-    overflow: visible;
-    padding-block: var(--section-y);
-  }
+/* — Tablets + phones: keep the horizontal sticky-scroll layout, tune sizes — */
+@media (max-width: 860px) {
   .chefx__track {
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
-    gap: 1.4rem;
-    padding-inline: var(--gutter);
-    transform: none !important;
+    gap: clamp(1.1rem, 3.4vw, 2rem);
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
   }
-  .chefx__item,
-  .chefx__item:nth-child(odd),
+  /* Smaller snake amplitude so items don't get cropped at the top/bottom of
+     the sticky window on shorter viewports. */
+  .chefx__item:nth-child(odd) {
+    transform: translateY(-6vh);
+  }
   .chefx__item:nth-child(even) {
-    transform: none;
-    width: 100%;
-    max-width: 460px;
-    margin-inline: auto;
+    transform: translateY(6vh);
+  }
+  .chefx__intro {
+    width: clamp(240px, 70vw, 320px);
+  }
+  .chefx__name {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+  }
+  .chefx__portrait {
+    width: clamp(220px, 62vw, 300px);
+  }
+  .chefx__photo {
+    width: clamp(200px, 56vw, 280px);
+  }
+  .chefx__text {
+    width: clamp(240px, 70vw, 320px);
+  }
+  .chefx__text p {
+    font-size: var(--fs-body);
+    line-height: 1.65;
+  }
+  .chefx__milestone {
+    width: clamp(200px, 58vw, 260px);
+    padding: clamp(1rem, 4vw, 1.4rem);
+  }
+  .chefx__quote {
+    width: clamp(260px, 80vw, 360px);
+  }
+  .chefx__quote p {
+    font-size: var(--fs-h3);
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 520px) {
+  .chefx__track {
+    gap: 1rem;
+    padding-inline: 1rem;
+  }
+  .chefx__item:nth-child(odd) {
+    transform: translateY(-4.5vh);
+  }
+  .chefx__item:nth-child(even) {
+    transform: translateY(4.5vh);
+  }
+  .chefx__intro {
+    width: 78vw;
+  }
+  .chefx__portrait {
+    width: 72vw;
+  }
+  .chefx__photo {
+    width: 66vw;
+  }
+  .chefx__text {
+    width: 78vw;
+  }
+  .chefx__milestone {
+    width: 70vw;
+  }
+  .chefx__quote {
+    width: 84vw;
   }
 }

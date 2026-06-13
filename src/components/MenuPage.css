@@ -139,3 +139,33 @@
   color: var(--muted);
   max-width: 60ch;
 }
+
+@media (max-width: 560px) {
+  .menupage__top-inner {
+    height: 56px;
+  }
+  .menupage__brand-ciao {
+    font-size: var(--fs-sm);
+  }
+  .menupage__brand-pat {
+    font-size: 0.95rem;
+  }
+  .menupage__back {
+    font-size: var(--fs-xs);
+  }
+  /* Let long item names wrap instead of squeezing the dot leader off-screen */
+  .menupage__item-name {
+    font-size: var(--fs-body);
+    line-height: 1.25;
+  }
+  .menupage__dots {
+    min-width: 1.5rem;
+  }
+  .menupage__item-row {
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+  .menupage__cat-title {
+    font-size: var(--fs-h3);
+  }
+}

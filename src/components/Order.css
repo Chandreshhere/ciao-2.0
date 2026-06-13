@@ -147,8 +147,23 @@
 @media (max-width: 760px) {
   .order {
     min-height: auto;
+    padding-block: clamp(3rem, 9vh, 5rem);
   }
   .order__images {
     display: none;
+  }
+  .order__facts {
+    gap: 0.5rem;
+  }
+  .order__fact {
+    flex: 1 1 calc(50% - 0.5rem);
+    max-width: none;
+    padding: 0.7rem 0.85rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .order__fact {
+    flex: 1 1 100%;
   }
 }

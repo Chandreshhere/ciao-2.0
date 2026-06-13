@@ -11,6 +11,12 @@ export default function Loader({ onDone }) {
   const [open, setOpen] = useState(false) // curtain panels split to the sides
   const [gone, setGone] = useState(false)
   const fired = useRef(false)
+  // Phone: curtain opens top/bottom; desktop: left/right. Decided once at
+  // mount — the loader only ever plays the intro on first paint.
+  const vertical =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(max-width: 760px)').matches
+  const axis = vertical ? 'y' : 'x'
 
   // Fire onDone exactly once — the moment the curtains begin to part — so the
   // hero is already revealed underneath them (no blank gap between the curtain
@@ -52,17 +58,18 @@ export default function Loader({ onDone }) {
           aria-hidden="true"
           exit={{ opacity: 0, transition: { duration: 0.4, ease: 'easeInOut' } }}
         >
-          {/* Left & right curtain panels — split open from the middle */}
+          {/* Curtain panels — split open from the middle. Desktop: left/right.
+              Phones: top/bottom. */}
           <motion.div
             className="loader__panel loader__panel--l"
-            initial={{ x: 0 }}
-            animate={open ? { x: '-101%' } : { x: 0 }}
+            initial={{ [axis]: 0 }}
+            animate={open ? { [axis]: '-101%' } : { [axis]: 0 }}
             transition={{ duration: 1.1, ease: EASE_CURTAIN }}
           />
           <motion.div
             className="loader__panel loader__panel--r"
-            initial={{ x: 0 }}
-            animate={open ? { x: '101%' } : { x: 0 }}
+            initial={{ [axis]: 0 }}
+            animate={open ? { [axis]: '101%' } : { [axis]: 0 }}
             transition={{ duration: 1.1, ease: EASE_CURTAIN }}
           />
 

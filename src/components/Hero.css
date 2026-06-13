@@ -201,14 +201,74 @@
 }
 
 @media (max-width: 760px) {
-  .bhero__side {
-    display: none;
+  /* Phones: lock the cake at the exact centre of the viewport. Use a square
+     box that's the viewport width, full-width left/right so it stays
+     horizontally centred, vertically centred via margin-top (negative half
+     of the box height). object-fit: cover crops the PNG's empty surround
+     so the cake reads larger. */
+  .bhero__fg {
+    inset: auto;
+    top: 56%;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vw;
+    margin: -50vw 0 0;
+    object-fit: cover;
+    object-position: center center;
+    transform-origin: center center;
   }
   .bhero__lines {
     width: min(74vw, 440px);
   }
   .bhero__intro-label {
     display: none;
+  }
+
+  /* Reposition the side text into the bottom corners on mobile, smaller. */
+  .bhero__side {
+    top: auto;
+    bottom: clamp(4.5rem, 12vh, 7rem);
+    transform: none;
+    width: 44vw;
+    max-width: 200px;
+    gap: 0.35rem;
+  }
+  .bhero__side--left {
+    left: clamp(1rem, 4vw, 1.5rem);
+    text-align: left;
+  }
+  .bhero__side--right {
+    right: clamp(1rem, 4vw, 1.5rem);
+    text-align: right;
+  }
+  .bhero__side-eyebrow {
+    font-size: var(--fs-micro);
+    letter-spacing: 0.18em;
+  }
+  .bhero__side-text {
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  /* Move the scroll cue out of the bottom-right where the side text now sits */
+  .bhero__scroll {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: clamp(1rem, 2vh, 1.5rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .bhero__fg {
+    top: 56%;
+    width: 100vw;
+    height: 100vw;
+    margin: -50vw 0 0;
+  }
+  .bhero__side {
+    width: 42vw;
+    bottom: clamp(4rem, 10vh, 6rem);
   }
 }
 
